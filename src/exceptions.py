@@ -8,3 +8,7 @@ class QidError(BaseException):
 
 class EidError(BaseException):
     pass
+
+
+class ApiError(BaseException):
+    pass

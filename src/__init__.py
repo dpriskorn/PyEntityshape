@@ -3,11 +3,7 @@ from typing import Any, Dict
 import requests
 from pydantic import BaseModel
 
-from src.exceptions import EidError, LangError, QidError
-
-
-class ApiError(BaseException):
-    pass
+from src.exceptions import EidError, LangError, QidError, ApiError
 
 
 class EntityShape(BaseModel):

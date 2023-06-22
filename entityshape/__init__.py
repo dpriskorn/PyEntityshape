@@ -1,9 +1,8 @@
-from typing import Any, Dict
-
 import requests
 from pydantic import BaseModel
 
 from entityshape.exceptions import ApiError, EidError, LangError, QidError
+from entityshape.models.result import Result
 
 
 class EntityShape(BaseModel):
@@ -16,7 +15,7 @@ class EntityShape(BaseModel):
     eid = ""  # entityshape
     lang = ""  # language
     timeout: int = 10
-    result: Dict[Any, Any] = {}
+    result: Result = Result()
 
     def __check__(self):
         if not self.lang:
@@ -26,14 +25,16 @@ class EntityShape(BaseModel):
         if not self.qid:
             raise QidError("We need an item QID")
 
-    def get_result(self) -> Dict[Any, Any]:
+    def get_result(self) -> Result:
         """This method checks if we got the 3 parameters we need and
         gets the results and return them"""
         self.__check__()
         url = f"http://entityshape.toolforge.org/api?entity={self.qid}&entityschema={self.eid}&language={self.lang}"
         response = requests.get(url, timeout=self.timeout)
         if response.status_code == 200:
-            self.result = response.json()
+            print(response.json())
+            self.result = Result(**response.json())
+            self.result.analyze()
             # print(self.result)
             return self.result
         else:

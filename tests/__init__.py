@@ -1,6 +1,6 @@
 from unittest import TestCase
 
-from src import EntityShape
+from entityshape import EntityShape
 
 
 class TestEntityShape(TestCase):

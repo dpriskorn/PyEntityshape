@@ -3,7 +3,7 @@ from typing import Any, Dict
 import requests
 from pydantic import BaseModel
 
-from src.exceptions import EidError, LangError, QidError, ApiError
+from entityshape.exceptions import ApiError, EidError, LangError, QidError
 
 
 class EntityShape(BaseModel):

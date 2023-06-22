@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "PyEntityshape"
-version = "0.0.2"
+version = "1.0.0"
 description = "Python library to validate Wikidata items using the entityshape API."
 authors = ["Dennis Priskorn <68460690+dpriskorn@users.noreply.github.com>"]
 license = "GPLv3+"

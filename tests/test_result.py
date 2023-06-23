@@ -1,4 +1,4 @@
-from typing import Any, Dict
+from typing import Any, ClassVar, Dict
 from unittest import TestCase
 
 from entityshape import Result
@@ -7,7 +7,7 @@ from entityshape import Result
 class TestResult(TestCase):
     """TODO add more tests based on another item validation json"""
 
-    hiking_path_with_1_missing_required_property: Dict[Any, Any] = {
+    hiking_path_with_1_missing_required_property: ClassVar[Dict[Any, Any]] = {
         "error": "",
         "general": {},
         "name": "hiking path",
@@ -244,7 +244,7 @@ class TestResult(TestCase):
         },
         "validity": {},
     }
-    campsite_missing_correct_p31: Dict[Any, Any] = {
+    campsite_missing_correct_p31: ClassVar[Dict[Any, Any]] = {
         "error": "",
         "general": {},
         "name": "campsite",
@@ -433,7 +433,7 @@ class TestResult(TestCase):
         },
         "validity": {},
     }
-    campsite_not_allowed_p625: Dict[Any, Any] = {
+    campsite_not_allowed_p625: ClassVar[Dict[Any, Any]] = {
         "error": "",
         "general": {},
         "name": "hiking path",

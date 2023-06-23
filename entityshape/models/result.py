@@ -23,6 +23,8 @@ class Result(BaseModel):
     required_properties_that_are_missing: Set[str] = set()
     optional_properties_that_are_missing: Set[str] = set()
     properties_without_enough_correct_statements: List[str] = []
+    properties_that_are_not_allowed: List[str] = []
+    statements_with_property_that_is_not_allowed: List[str] = []
 
     @property
     def some_required_properties_are_missing(self):
@@ -41,6 +43,10 @@ class Result(BaseModel):
         return bool(self.properties_without_enough_correct_statements)
 
     @property
+    def statements_with_properties_that_are_not_allowed_found(self):
+        return bool(self.statements_with_property_that_is_not_allowed)
+
+    @property
     def is_valid(self) -> bool:
         """check if the properties are all allowed,
         all required properties are present,
@@ -52,6 +58,7 @@ class Result(BaseModel):
             and not self.incorrect_statements_found
             and not self.some_required_properties_are_missing
             and not self.properties_without_enough_correct_statements_found
+            and not self.statements_with_properties_that_are_not_allowed_found
         )
 
     @property
@@ -67,6 +74,8 @@ class Result(BaseModel):
             self.__find_properties_with_not_enough_correct_statements__()
             self.__find_required_properties_that_are_missing__()
             self.__find_optional_properties_that_are_missing__()
+            self.__find_properties_that_are_not_allowed__()
+            self.__find_statements_with_property_that_is_not_allowed__()
             self.analyzed = True
 
     def __find_properties_with_too_many_statements__(self):
@@ -111,3 +120,15 @@ class Result(BaseModel):
             value: PropertyValue = self.properties[property_]
             if value.response == PropertyResponse.NOT_ENOUGH_CORRECT_STATEMENTS:
                 self.properties_without_enough_correct_statements.append(property_)
+
+    def __find_properties_that_are_not_allowed__(self):
+        for property_ in self.properties:
+            value: PropertyValue = self.properties[property_]
+            if value.necessity == Necessity.ABSENT:
+                self.properties_that_are_not_allowed.append(property_)
+
+    def __find_statements_with_property_that_is_not_allowed__(self):
+        for statement in self.statements:
+            value: StatementValue = self.statements[statement]
+            if value.necessity == Necessity.ABSENT:
+                self.statements_with_property_that_is_not_allowed.append(value.property)

@@ -1,3 +1,4 @@
+**Deprecated and archived in favor of https://github.com/dpriskorn/entityshape**
 # PyEntityshape
 Python library to lookup Wikidata items in the entityshape API.
 

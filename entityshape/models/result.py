@@ -1,4 +1,4 @@
-from typing import Any, ClassVar, Dict, List, Set
+from typing import Any, Dict, Set
 
 from pydantic import BaseModel, Field
 
@@ -15,16 +15,16 @@ class Result(BaseModel):
     schema_: str = Field("", alias="schema")
     statements: Dict[Any, StatementValue] = {}
     validity: Dict[Any, Any] = {}  # always empty
-    missing_properties: ClassVar[List[str]] = []
-    required_properties: ClassVar[List[str]] = []
-    incorrect_statements: ClassVar[List[str]] = []
-    properties_with_too_many_statements: ClassVar[List[str]] = []
+    missing_properties: Set[str] = set()
+    required_properties: Set[str] = set()
+    incorrect_statements: Set[str] = set()
+    properties_with_too_many_statements: Set[str] = set()
     analyzed: bool = False
     required_properties_that_are_missing: Set[str] = set()
     optional_properties_that_are_missing: Set[str] = set()
-    properties_without_enough_correct_statements: ClassVar[List[str]] = []
-    properties_that_are_not_allowed: ClassVar[List[str]] = []
-    statements_with_property_that_is_not_allowed: ClassVar[List[str]] = []
+    properties_without_enough_correct_statements: Set[str] = set()
+    properties_that_are_not_allowed: Set[str] = set()
+    statements_with_property_that_is_not_allowed: Set[str] = set()
 
     @property
     def some_required_properties_are_missing(self):
@@ -82,25 +82,25 @@ class Result(BaseModel):
         for property_ in self.properties:
             value: PropertyValue = self.properties[property_]
             if value.response == PropertyResponse.TOO_MANY_STATEMENTS:
-                self.properties_with_too_many_statements.append(property_)
+                self.properties_with_too_many_statements.add(property_)
 
     def __find_incorrect_statements__(self):
         for statement in self.statements:
             value: StatementValue = self.statements[statement]
             if value.response == StatementResponse.INCORRECT:
-                self.incorrect_statements.append(statement)
+                self.incorrect_statements.add(statement)
 
     def __find_required_properties__(self):
         for property_ in self.properties:
             value: PropertyValue = self.properties[property_]
             if value.necessity == Necessity.REQUIRED:
-                self.required_properties.append(property_)
+                self.required_properties.add(property_)
 
     def __find_missing_properties__(self):
         for property_ in self.properties:
             value: PropertyValue = self.properties[property_]
             if value.response == PropertyResponse.MISSING:
-                self.missing_properties.append(property_)
+                self.missing_properties.add(property_)
 
     def __find_required_properties_that_are_missing__(self):
         a = set(self.missing_properties)
@@ -119,16 +119,16 @@ class Result(BaseModel):
         for property_ in self.properties:
             value: PropertyValue = self.properties[property_]
             if value.response == PropertyResponse.NOT_ENOUGH_CORRECT_STATEMENTS:
-                self.properties_without_enough_correct_statements.append(property_)
+                self.properties_without_enough_correct_statements.add(property_)
 
     def __find_properties_that_are_not_allowed__(self):
         for property_ in self.properties:
             value: PropertyValue = self.properties[property_]
             if value.necessity == Necessity.ABSENT:
-                self.properties_that_are_not_allowed.append(property_)
+                self.properties_that_are_not_allowed.add(property_)
 
     def __find_statements_with_property_that_is_not_allowed__(self):
         for statement in self.statements:
             value: StatementValue = self.statements[statement]
             if value.necessity == Necessity.ABSENT:
-                self.statements_with_property_that_is_not_allowed.append(value.property)
+                self.statements_with_property_that_is_not_allowed.add(value.property)

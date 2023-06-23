@@ -40,5 +40,5 @@ class TestEntityShape(TestCase):
         print(e.result)
         assert isinstance(e.result, Result)
         assert e.result.is_valid is False
-        assert e.result.required_properties_that_are_missing == ["P2043"]
-        assert e.result.properties_that_are_not_allowed == [""]
+        assert e.result.required_properties_that_are_missing == {"P2043"}
+        assert e.result.properties_that_are_not_allowed == {"P912", "P625", "P276"}

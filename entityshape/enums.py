@@ -13,6 +13,7 @@ class PropertyResponse(Enum):
     INCORRECT = "incorrect"
     TOO_MANY_STATEMENTS = "too many statements"
     CORRECT = "correct"
+    NOT_ENOUGH_CORRECT_STATEMENTS = "not enough correct statements"
 
 
 class StatementResponse(Enum):

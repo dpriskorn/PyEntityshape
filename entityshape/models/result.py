@@ -1,4 +1,4 @@
-from typing import Any, Dict, List, Set
+from typing import Any, ClassVar, Dict, List, Set
 
 from pydantic import BaseModel, Field
 
@@ -15,16 +15,16 @@ class Result(BaseModel):
     schema_: str = Field("", alias="schema")
     statements: Dict[Any, StatementValue] = {}
     validity: Dict[Any, Any] = {}  # always empty
-    missing_properties: List[str] = []
-    required_properties: List[str] = []
-    incorrect_statements: List[str] = []
-    properties_with_too_many_statements: List[str] = []
+    missing_properties: ClassVar[List[str]] = []
+    required_properties: ClassVar[List[str]] = []
+    incorrect_statements: ClassVar[List[str]] = []
+    properties_with_too_many_statements: ClassVar[List[str]] = []
     analyzed: bool = False
     required_properties_that_are_missing: Set[str] = set()
     optional_properties_that_are_missing: Set[str] = set()
-    properties_without_enough_correct_statements: List[str] = []
-    properties_that_are_not_allowed: List[str] = []
-    statements_with_property_that_is_not_allowed: List[str] = []
+    properties_without_enough_correct_statements: ClassVar[List[str]] = []
+    properties_that_are_not_allowed: ClassVar[List[str]] = []
+    statements_with_property_that_is_not_allowed: ClassVar[List[str]] = []
 
     @property
     def some_required_properties_are_missing(self):

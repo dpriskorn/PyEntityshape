@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "PyEntityshape"
-version = "0.0.2"
+version = "1.0.0"
 description = "Python library to validate Wikidata items using the entityshape API."
 authors = ["Dennis Priskorn <68460690+dpriskorn@users.noreply.github.com>"]
 license = "GPLv3+"
@@ -120,7 +120,8 @@ known-first-party = ["config"]
 max-complexity = 11
 
 [tool.ruff.per-file-ignores]
-"tests/*" = ["PT009", "PT018", "RUF001", "RUF003", "S101", "ISC001",]
+"tests/*" = ["PT009", "PT018", "RUF001", "RUF003", "S101", "ISC001", #"RUF012"
+]
 
 [build-system]
 requires = ["poetry-core"]

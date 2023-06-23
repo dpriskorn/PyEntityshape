@@ -38,7 +38,11 @@ repos:
     args:
       # Tell ruff to fix sorting of imports
       - "--fix"
-    types: [python]
+      - "--format=github"
+      - "--target-version=py37"
+      - "."
+    # types: [python]
+    pass_filenames: false
 
  # https://jaredkhan.com/blog/mypy-pre-commit
   - id: mypy

@@ -40,7 +40,9 @@ repos:
       - "--fix"
       - "--format=github"
       - "--target-version=py37"
-    types: [python]
+      - "."
+    # types: [python]
+    pass_filenames: false
 
  # https://jaredkhan.com/blog/mypy-pre-commit
   - id: mypy

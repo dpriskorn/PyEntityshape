@@ -1,6 +1,6 @@
 from unittest import TestCase
 
-from entityshape import EntityShape, ApiError, Result
+from entityshape import ApiError, EntityShape, Result
 
 
 class TestEntityShape(TestCase):
@@ -8,23 +8,23 @@ class TestEntityShape(TestCase):
         e = EntityShape(eid="eeeE1", lang="en", qid="Q1")
         with self.assertRaises(ApiError):
             e.get_result()
-        #print(e.result)
+        # print(e.result)
         # assert e.result != {}
 
     def test_get_result_invalid_lang(self):
         """The API does not seem to check whether the lang code is valid or not"""
         e = EntityShape(eid="E376", lang="eeeeen", qid="Q119853967")
-        #with self.assertRaises(ApiError):
+        # with self.assertRaises(ApiError):
         e.get_result()
-        assert e.result.is_valid == True
-        #print(e.result)
+        assert e.result.is_valid is True
+        # print(e.result)
         # assert e.result != {}
 
     def test_get_result_invalid_qid(self):
         e = EntityShape(eid="E1", lang="en", qid="qqqqQ1")
         with self.assertRaises(ApiError):
             e.get_result()
-        #print(e.result)
+        # print(e.result)
         # assert e.result != {}
 
     def test_get_result_valid(self):
@@ -32,13 +32,13 @@ class TestEntityShape(TestCase):
         e.get_result()
         print(e.result)
         assert isinstance(e.result, Result)
-        assert e.result.is_valid == True
+        assert e.result.is_valid is True
 
     def test_get_result_invalid_wrong_schema(self):
         e = EntityShape(eid="E375", lang="en", qid="Q119853967")
         e.get_result()
         print(e.result)
         assert isinstance(e.result, Result)
-        assert e.result.is_valid == False
+        assert e.result.is_valid is False
         assert e.result.required_properties_that_are_missing == ["P2043"]
         assert e.result.properties_that_are_not_allowed == [""]
